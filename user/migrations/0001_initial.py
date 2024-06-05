@@ -5,21 +5,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Users',
+            name="Users",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
-                ('first_name', models.TextField(max_length=20)),
-                ('last_name', models.TextField(max_length=20)),
-                ('email', models.EmailField(max_length=60)),
-                ('password', models.TextField(max_length=300)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4, primary_key=True, serialize=False
+                    ),
+                ),
+                ("first_name", models.TextField(max_length=20)),
+                ("last_name", models.TextField(max_length=20)),
+                ("email", models.EmailField(max_length=60)),
+                ("password", models.TextField(max_length=300)),
             ],
         ),
     ]

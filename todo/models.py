@@ -9,5 +9,5 @@ class Todos(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4)
     task = models.TextField(max_length=100)
     status = models.BooleanField(default=False)
-    created_on = models.DateTimeField(default=datetime.now())
+    created_on = models.DateTimeField(default=datetime.now)
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
