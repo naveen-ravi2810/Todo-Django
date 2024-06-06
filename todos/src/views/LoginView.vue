@@ -1,26 +1,33 @@
 <template>
-    <div>
-        <form @submit.prevent="handleSubmit">
-            <div>
-                <label>Email</label>
-                <input type="email" v-model="email" required/>
-            </div>
-            <div>
-                <label>Password</label>
-                <input type="password" v-model="password" required/>
-            </div>
-            <div>
-                <button type="submit">Login</button>
-            </div>
-        </form>
-        <p>Not have an account?</p>
-        <router-link :to="{ name: 'register' }">Register</router-link>
+    <Navbar/>
+    <div class="flex h-screen justify-center items-center">
+        <div>
+            <form @submit.prevent="handleSubmit" class="border-[2px] p-4 rounded-xl">
+                <div class="">
+                    <label>Email</label> <br>
+                    <input class="border-[1px] p-2 rounded" type="email" v-model="email" required/>
+                </div>
+                <div class="pt-5">
+                    <label>Password</label> <br>
+                    <input class="border-[1px] p-2 rounded" type="password" v-model="password" required/>
+                </div>
+                <div class="flex justify-center items-center py-5">
+                    <button class="border-[1px] bg-green-300 hover:bg-green-500 p-2 rounded" type="submit">Login</button>
+                </div>
+                <p>Not have an account?</p>
+                <router-link :to="{ name: 'register' }">Register</router-link>
+            </form>
+        </div>
     </div>
 </template>
 
 <script>
+import Navbar from './../components/Navbar.vue'
 export default {
     name: "LoginView",
+    components:{
+        Navbar
+    },
     data() {
         return {
             email: "rnaveen28102003@gmail.com",

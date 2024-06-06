@@ -1,13 +1,13 @@
 <template>
-    <div v-if="is_active" :class="{ completedtask: localTodo.status, notcompletedtask: !localTodo.status }" id="task-div">
+    <div v-if="is_active" :class="['p-[10px]', 'mt-[10px]', 'flex', 'justify-between', 'items-center', localTodo.status ? 'bg-green-500' : 'bg-red-300']">
         <div>
             <p>{{ localTodo.task }}</p>
             <p>{{ localTodo.created_on.slice(0,10) }}</p>
             <p>{{  localTodo.created_on.slice(11,19) }}</p>
         </div>
-        <div>
-            <button @click="delete_task">Delete Task</button> <br>
-            <button @click="update_status">{{ localTodo.status ? 'Completed' : 'Not Completed' }}</button>
+        <div class="flex flex-col justify-center">
+            <button class="border-[1px] py-1 px-2 rounded" @click="delete_task">Delete Task</button> <br>
+            <button class="border-[1px] py-1 px-2 rounded" @click="update_status">{{ localTodo.status ? 'Completed' : 'Not Completed' }}</button>
         </div>
     </div>
 </template>
@@ -69,12 +69,7 @@ export default {
 </script>
 
 <style scoped>
-#task-div {
-    padding: 10px;
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-}
+
 .completedtask {
     background-color: greenyellow;
 }

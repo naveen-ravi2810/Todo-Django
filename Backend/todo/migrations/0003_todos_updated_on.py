@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('todo', '0002_alter_todos_created_on'),
+        ("todo", "0002_alter_todos_created_on"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='todos',
-            name='updated_on',
+            model_name="todos",
+            name="updated_on",
             field=models.DateTimeField(auto_now=True),
         ),
     ]

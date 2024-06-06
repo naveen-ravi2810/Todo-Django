@@ -1,7 +1,8 @@
 <template lang="">
-    <form @submit.prevent="add_task">
-        <input v-model="new_task" type="text" placeholder="enter new task" required/>
-        <button type="submit">Add Task</button>
+      <Navbar/>
+    <form @submit.prevent="add_task" style="display:flex; justify-content:center; gap:20px; padding:20px 0 20px 0">
+        <input class="border-[1px] border-green-500 p-1 outline-none" v-model="new_task" type="text" :placeholder="new_task_placeholder" required/>
+        <button type="submit" class="border-[1px] rounded p-2 hover:bg-green-400 uppercase">Add Task</button>
     </form>
     <div id="todos">
         <div id="singletodo">
@@ -11,20 +12,32 @@
 </template>
 <script>
 import TodoComponents from '@/components/TodoComponents.vue';
+import Navbar from '@/components/Navbar.vue'
+
 export default {
     name:'TodoView',
     components:{
-        TodoComponents
+        TodoComponents, Navbar
     },
     data() {
         return {
             todos: null,
-            new_task : ""
+            new_task : "",
+            new_task_placeholder : "Say a good bye",
+            new_task_placeholder_sentences : ["Need to arrange a meeting", "Walk with the dog", "Say a good bye"]
         }
     },
-    created(){
-        this.get_todos()
-        console.log(this.$store.state.login)
+    created() {
+        if (localStorage.getItem('token')) {
+            this.get_todos();
+        } else {
+            this.$router.replace({ name: 'login' });
+        }
+        let index = 0;
+        this.placeholderInterval = setInterval(() => {
+            this.new_task_placeholder = this.new_task_placeholder_sentences[index];
+            index = (index + 1) % this.new_task_placeholder_sentences.length;
+        }, 1000);
     },
     methods: {
         async get_todos(){

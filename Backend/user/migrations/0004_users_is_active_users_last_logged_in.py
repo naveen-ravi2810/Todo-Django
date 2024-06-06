@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('user', '0003_users_phone'),
+        ("user", "0003_users_phone"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='users',
-            name='is_active',
+            model_name="users",
+            name="is_active",
             field=models.BooleanField(default=True),
         ),
         migrations.AddField(
-            model_name='users',
-            name='last_logged_in',
+            model_name="users",
+            name="last_logged_in",
             field=models.DateTimeField(auto_now=True),
         ),
     ]

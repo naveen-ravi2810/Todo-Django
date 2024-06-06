@@ -1,3 +1,5 @@
+import components from '@/components'
+import { compile } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -15,6 +17,11 @@ const routes = [
     name: 'register',
     path: '/register',
     component: () => import('../views/RegisterView.vue')
+  },
+  {
+    name:'404',
+    path: '/:pathMatch(.*)*',
+    component: () => import('../views/404NotFound.vue')
   }
 ]
 

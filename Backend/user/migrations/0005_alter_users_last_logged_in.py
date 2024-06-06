@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('user', '0004_users_is_active_users_last_logged_in'),
+        ("user", "0004_users_is_active_users_last_logged_in"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='users',
-            name='last_logged_in',
+            model_name="users",
+            name="last_logged_in",
             field=models.DateTimeField(auto_now_add=True),
         ),
     ]

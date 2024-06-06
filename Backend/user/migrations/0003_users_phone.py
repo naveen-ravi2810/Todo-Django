@@ -5,15 +5,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('user', '0002_alter_users_email'),
+        ("user", "0002_alter_users_email"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='users',
-            name='phone',
+            model_name="users",
+            name="phone",
             field=models.BigIntegerField(default=0000000000),
             preserve_default=False,
         ),

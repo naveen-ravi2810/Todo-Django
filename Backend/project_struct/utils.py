@@ -23,7 +23,13 @@ def create_access_token(user: Users) -> str:
     iat = datetime.now(ist)
     exp = iat + timedelta(days=1)
     return jwt.encode(
-        payload={"email": user.email, "sub": str(user.id), "iat": iat, "exp": exp},
+        payload={
+            "email": user.email,
+            "sub": str(user.id),
+            "iat": iat,
+            "exp": exp,
+            "name": user.first_name + " " + user.last_name,
+        },
         key=settings.JWT_SECRET_KEY,
         algorithm=settings.JWT_ALGORITHM,
     )
@@ -34,19 +40,32 @@ def decode_access_token(token: str):
         jwt=token, key=settings.JWT_SECRET_KEY, algorithms=settings.JWT_ALGORITHM
     )
 
+
 def auth_required(fn):
     @wraps(fn)
-    def decorator(self, request:HttpRequest, *args, **kwargs):
+    def decorator(self, request: HttpRequest, *args, **kwargs):
         auth_header = request.META.get("HTTP_AUTHORIZATION", None)
         if auth_header is None:
-            return JsonResponse({"error": "Authorization header missing"}, status=status.HTTP_401_UNAUTHORIZED)
+            return JsonResponse(
+                {"error": "Authorization header missing"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
         try:
-            schema, token = auth_header.split()[0],  auth_header.split()[1]
-            if schema.lower() != 'bearer':
-                return JsonResponse({'error':"Invalid schema"}, status=status.HTTP_401_UNAUTHORIZED) 
+            schema, token = auth_header.split()[0], auth_header.split()[1]
+            if schema.lower() != "bearer":
+                return JsonResponse(
+                    {"error": "Invalid schema"}, status=status.HTTP_401_UNAUTHORIZED
+                )
+            if token == None:
+                return JsonResponse({
+                    'message':'Token Missing'
+                }, status=status.HTTP_401_UNAUTHORIZED)
             jwt_claims = decode_access_token(token)
-            request.user_id = jwt_claims['sub']
+            request.user_id = jwt_claims["sub"]
             return fn(self, request, *args, **kwargs)
         except Exception as e:
-            return JsonResponse({'message':str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+            return JsonResponse(
+                {"message": str(e)}, status=status.HTTP_401_UNAUTHORIZED
+            )
+
     return decorator
