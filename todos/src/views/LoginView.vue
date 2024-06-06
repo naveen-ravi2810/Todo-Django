@@ -13,6 +13,8 @@
                 <button type="submit">Login</button>
             </div>
         </form>
+        <p>Not have an account?</p>
+        <router-link :to="{ name: 'register' }">Register</router-link>
     </div>
 </template>
 

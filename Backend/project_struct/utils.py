@@ -46,7 +46,6 @@ def auth_required(fn):
                 return JsonResponse({'error':"Invalid schema"}, status=status.HTTP_401_UNAUTHORIZED) 
             jwt_claims = decode_access_token(token)
             request.user_id = jwt_claims['sub']
-            print(jwt_claims['sub'])
             return fn(self, request, *args, **kwargs)
         except Exception as e:
             return JsonResponse({'message':str(e)}, status=status.HTTP_401_UNAUTHORIZED)
