@@ -2,7 +2,8 @@
     <div v-if="is_active" :class="{ completedtask: localTodo.status, notcompletedtask: !localTodo.status }" id="task-div">
         <div>
             <p>{{ localTodo.task }}</p>
-            <p>{{ localTodo.created_on }}</p>
+            <p>{{ localTodo.created_on.slice(0,10) }}</p>
+            <p>{{  localTodo.created_on.slice(11,19) }}</p>
         </div>
         <div>
             <button @click="delete_task">Delete Task</button> <br>

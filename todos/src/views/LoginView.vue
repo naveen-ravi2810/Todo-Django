@@ -40,6 +40,7 @@ export default {
                 const data = await resp.json();
                 if (resp.ok) {
                     localStorage.setItem('token', data.access_token);
+                    this.$store.commit('logged_in')
                     this.$router.push({ name: 'todos'})
                 } else {
                     alert(data.message);

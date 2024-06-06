@@ -24,6 +24,7 @@ export default {
     },
     created(){
         this.get_todos()
+        console.log(this.$store.state.login)
     },
     methods: {
         async get_todos(){
@@ -54,7 +55,10 @@ export default {
                         'created_on': await data.todo.created_on,
                         'id':await data.todo.id
                     }]
-                } else{
+                    this.new_task = ""
+                } else if(resp.status == 500){
+                    alert("Server error")
+                } else {
                     alert("An error occured")
                 }
             } catch {
