@@ -9,3 +9,4 @@ class Users(models.Model):
     last_name = models.TextField(max_length=20)
     email = models.EmailField(max_length=60, unique=True)
     password = models.TextField(max_length=300)
+    phone = models.BigIntegerField()

@@ -29,7 +29,7 @@ export default {
         async handleSubmit() {
             try {
                 console.log("Submitting form...");
-                const resp = await fetch("http://127.0.0.1:8000/login", {
+                const resp = await fetch("/api/login", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -40,6 +40,7 @@ export default {
                 const data = await resp.json();
                 if (resp.ok) {
                     localStorage.setItem('token', data.access_token);
+                    this.$router.push({ name: 'todos'})
                 } else {
                     alert(data.message);
                 }

@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from functools import wraps
 from django.http import JsonResponse
 from rest_framework import status
+from rest_framework.request import HttpRequest
 from user.models import Users
 from project_struct import settings
 
@@ -35,7 +36,7 @@ def decode_access_token(token: str):
 
 def auth_required(fn):
     @wraps(fn)
-    def decorator(request, *args, **kwargs):
+    def decorator(request:HttpRequest, *args, **kwargs):
         auth_header = request.META.get("HTTP_AUTHORIZATION", None)
         if auth_header is None:
             return JsonResponse({"error": "Authorization header missing"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -45,6 +46,7 @@ def auth_required(fn):
                 return JsonResponse({'error':"Invalid schema"}, status=status.HTTP_401_UNAUTHORIZED) 
             jwt_claims = decode_access_token(token)
             request.user_id = jwt_claims['sub']
+            print(jwt_claims['sub'])
             return fn(request, *args, **kwargs)
         except Exception as e:
             return JsonResponse({'message':str(e)}, status=status.HTTP_401_UNAUTHORIZED)

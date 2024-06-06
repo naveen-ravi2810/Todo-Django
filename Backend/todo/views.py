@@ -22,8 +22,9 @@ def todos(request):
             new_todo = Todos(**serializer.validated_data)
             new_todo.user_id = Users.objects.filter(id=request.user_id).first()
             new_todo.save()
+            serializer = ReadTodosSerializer(new_todo)
             return JsonResponse(
-                {"message": "Todo added successfully"}, status=status.HTTP_201_CREATED
+                {"todo": serializer.data}, status=status.HTTP_201_CREATED
             )
         return JsonResponse(
             {"message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST
