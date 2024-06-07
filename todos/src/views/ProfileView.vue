@@ -3,12 +3,6 @@
         <Navbar/>
         <div class="container mx-auto mt-8">
             <table v-if="user" class="min-w-full bg-white border border-gray-200">
-                <thead>
-                    <tr>
-                        <th class="py-2 px-4 border-b">Key</th>
-                        <th class="py-2 px-4 border-b">Value</th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr v-for="(value, key) in user" :key="key">
                         <td class="py-2 px-4 border-b">{{ key }}</td>
