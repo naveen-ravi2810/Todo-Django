@@ -75,5 +75,7 @@ class LoginView(APIView):
 class TokenView(APIView):
     @auth_required
     def get(self, request: HttpRequest):
-        token_details = decode_access_token(request.headers.get("Authorization").split(" ")[1])
+        token_details = decode_access_token(
+            request.headers.get("Authorization").split(" ")[1]
+        )
         return Response({"user": token_details}, status=status.HTTP_200_OK)

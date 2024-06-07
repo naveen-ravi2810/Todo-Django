@@ -1,22 +1,26 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.request import HttpRequest
 from .models import Todos
 from user.models import Users
 from .serializers import ReadTodosSerializer, CreateTodoSerializer
 from uuid import UUID
 from project_struct.utils import auth_required
 
+from project_struct.utils import Pagination
+
 
 # To fetch every Todos or create a todo
 class ManyTodoView(APIView):
     @auth_required
-    def get(self, request):
+    def get(self, request: HttpRequest):
         todos = (
             Todos.objects.filter(user_id=request.user_id).order_by("created_on").all()
         )
         serializer = ReadTodosSerializer(todos, many=True)
-        return Response({"todos": serializer.data}, status=status.HTTP_200_OK)
+        p = Pagination(serializer.data, request=request)
+        return Response({"todos": p()}, status=status.HTTP_200_OK)
 
     @auth_required
     def post(self, request):
@@ -35,7 +39,7 @@ class ManyTodoView(APIView):
 # To make an operation on a single todo
 class SingleTodoView(APIView):
     @auth_required
-    def get(self, request, id: UUID):
+    def get(self, request: HttpRequest, id: UUID):
         todo = Todos.objects.filter(id=id).filter(user_id=request.user_id).first()
         if not todo:
             return Response(

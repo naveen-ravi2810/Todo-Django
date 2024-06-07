@@ -1,5 +1,7 @@
 import TodoComponents from "./TodoComponents.vue";
+import Navbar from "./Navbar.vue";
 
 export  default {
-    TodoComponents
+    TodoComponents,
+    Navbar
 }

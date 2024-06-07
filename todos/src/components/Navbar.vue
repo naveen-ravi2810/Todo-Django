@@ -3,7 +3,7 @@
         <div>TODO</div>
         <div v-if="!isLoading">
             <div v-if="token_details">
-                <button @click="profile_option=!profile_option">{{ token_details.name }}</button>
+                <button @click="profile_option=!profile_option" class="uppercase">{{ token_details.name }}</button>
                 <ul v-if="profile_option" style="display:flex; flex-direction:column;position: absolute; top: 100%; right: 0; background: white; list-style: none; padding: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
                     <router-link to="/todos">Todos</router-link>
                     <router-link to="/profile">Profile</router-link>

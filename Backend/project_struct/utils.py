@@ -1,3 +1,4 @@
+from typing import Any
 import bcrypt
 import jwt
 from pytz import timezone
@@ -57,9 +58,9 @@ def auth_required(fn):
                     {"error": "Invalid schema"}, status=status.HTTP_401_UNAUTHORIZED
                 )
             if token == None:
-                return JsonResponse({
-                    'message':'Token Missing'
-                }, status=status.HTTP_401_UNAUTHORIZED)
+                return JsonResponse(
+                    {"message": "Token Missing"}, status=status.HTTP_401_UNAUTHORIZED
+                )
             jwt_claims = decode_access_token(token)
             request.user_id = jwt_claims["sub"]
             return fn(self, request, *args, **kwargs)
@@ -69,3 +70,36 @@ def auth_required(fn):
             )
 
     return decorator
+
+
+class Pagination:
+    def __init__(self, serializer, request: HttpRequest | None = None) -> None:
+        self.content = serializer
+        self.request = request
+        self.page_no = int(request.GET.get("page_no", 1))
+        self.page_count = int(request.GET.get("page_count", 10))
+
+    def previous_page(self):
+        if self.page_no <= 1:
+            return None
+        # return self.request.path +"?page_no="+ str(self.page_no-1)
+        return self.page_no - 1
+
+    def next_page(self):
+        if self.page_no >= len(self.content) / self.page_count:
+            return None
+        # return self.request.path +"?page_no="+ str(self.page_no+1)
+        return self.page_no + 1
+
+    def data(self):
+        return self.content[
+            (self.page_no - 1) * self.page_count : self.page_no * self.page_count
+        ]
+
+    def __call__(self, *args: Any, **kwds: Any) -> Any:
+        return {
+            "previous_page": self.previous_page(),
+            "next_page": self.next_page(),
+            "total": len(self.content),
+            "data": self.data(),
+        }
