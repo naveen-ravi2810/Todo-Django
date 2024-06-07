@@ -1,4 +1,4 @@
-from .serializers import RegisterSerializer, LoginSerializer
+from .serializers import RegisterSerializer, LoginSerializer, ProfileSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import HttpRequest
@@ -79,3 +79,11 @@ class TokenView(APIView):
             request.headers.get("Authorization").split(" ")[1]
         )
         return Response({"user": token_details}, status=status.HTTP_200_OK)
+
+
+class ProfileView(APIView):
+    @auth_required
+    def get(self, request):
+        user = Users.objects.filter(id=request.user_id).first()
+        serializer = ProfileSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)

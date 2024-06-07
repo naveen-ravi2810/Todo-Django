@@ -6,7 +6,7 @@
                 <p class="text-red-400 animate-bounce" v-if="error['message']">{{ error.message }}</p>
                 <div class="">
                     <label class="uppercase font-semibold">Email</label> <br>
-                    <input class="border-[1px] p-2 rounded" type="email" v-model="email" required/>
+                    <input class="border-[1px] p-2 rounded" type="email" v-model="email" autofocus required/>
                 </div>
                 <div class="pt-5">
                     <label class="uppercase font-semibold">Password</label> <br>
@@ -33,8 +33,8 @@ export default {
     },
     data() {
         return {
-            email: "rnaveen28102003@gmail.com",
-            password: "test1234",
+            email: "",
+            password: "",
             error : {
                 'message': ' '
             }

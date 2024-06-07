@@ -19,10 +19,15 @@ const routes = [
     component: () => import('../views/RegisterView.vue')
   },
   {
+    name:'profile',
+    path:'/profile',
+    component: () => import('../views/ProfileView.vue')
+  },
+  {
     name:'404',
     path: '/:pathMatch(.*)*',
     component: () => import('../views/404NotFound.vue')
-  }
+  },
 ]
 
 const router = createRouter({

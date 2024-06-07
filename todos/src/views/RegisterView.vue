@@ -3,7 +3,7 @@
         <form class="border-[1px] border-green-600 p-4 w-1/2" @submit.prevent="handleSubmit">
             <div class="py-3 flex flex-col gap-3">
                 <label class="font-semibold uppercase">First name</label>
-                <input class="border-[1px] border-gray-500 p-2" type="text" v-model="first_name" required/>
+                <input class="border-[1px] border-gray-500 p-2" type="text" autofocus v-model="first_name" required/>
             </div>
             <div class="py-3 flex flex-col gap-3">
                 <label class="font-semibold uppercase">Last name</label>
@@ -44,12 +44,12 @@ export default {
     name:'RegisterView',
     data(){
         return{
-            first_name : "test",
-            last_name : "user",
-            email : "testuser@gmail.com",
-            phone : "3456789012",
-            password : "test1234",
-            re_enter_password : "test1234",
+            first_name : "",
+            last_name : "",
+            email : "",
+            phone : "",
+            password : "",
+            re_enter_password : "",
             error : {}
         }
     },
