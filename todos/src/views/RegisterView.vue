@@ -1,35 +1,42 @@
 <template lang="">
-    <div>
-        <form @submit.prevent="handleSubmit">
-            <div>
-                <label>First name</label>
-                <input type="text" v-model="first_name" required/>
+    <div class="flex justify-center items-center w-full pt-20">
+        <form class="border-[1px] border-green-600 p-4 w-1/2" @submit.prevent="handleSubmit">
+            <div class="py-3 flex flex-col gap-3">
+                <label class="font-semibold uppercase">First name</label>
+                <input class="border-[1px] border-gray-500 p-2" type="text" v-model="first_name" required/>
             </div>
-            <div>
-                <label>Last name</label>
-                <input type="text" v-model="last_name" required/>
+            <div class="py-3 flex flex-col gap-3">
+                <label class="font-semibold uppercase">Last name</label>
+                <input class="border-[1px] border-gray-500 p-2" type="text" v-model="last_name" required/>
             </div>
-            <div>
-                <label>Email</label>
-                <input type="email" v-model="email" required/>
+            <div class="py-3 flex flex-col gap-3">
+                <label class="font-semibold uppercase">Email</label>
+                <input class="border-[1px] border-gray-500 p-2" type="email" v-model="email" required/>
+                <p class="text-red-500 animate-bounce" v-if="error['email']">{{ error.email[0] }}</p>
             </div>
-            <div>
-                <label>Phone</label>
-                <input type="number" v-model="phone" required/>
+            <div class="py-3 flex flex-col gap-3">
+                <label class="font-semibold uppercase">Phone</label>
+                <input class="border-[1px] border-gray-500 p-2" type="tel" v-model="phone" required/>
             </div>
-            <div>
-                <label>Password</label>
-                <input type="password" v-model="password" required/>
+            <div class="py-3 flex flex-col gap-3">
+                <label class="font-semibold uppercase">Password</label>
+                <input class="border-[1px] border-gray-500 p-2" type="password" v-model="password" required/>
             </div>
-            <div>
-                <label>Re-Enter Password</label>
-                <input type="password" v-model="re_enter_password" required/>
+            <div class="py-3 flex flex-col gap-3">
+                <label class="font-semibold uppercase">Re-Enter Password</label>
+                <input class="border-[1px] border-gray-500 p-2" type="password" v-model="re_enter_password" required/>
+                <p class="text-red-500 animate-bounce" v-if="error['password']">{{ error.password }}</p>
             </div>
-            <div>
-                <button type="submit">Register</button>
+            <div class=w-full>
+                <button class="w-full bg-green-500 py-2" type="submit">Register</button>
+            </div>
+            <div class="w-full flex justify-center pt-3">
+                <p class="">Already have an account?</p>
+            </div>
+            <div class="w-full pt-3 flex justify-center text-center">
+                <router-link class="w-full bg-green-500 py-2" :to="{name:'login'}">Login</router-link>
             </div>
         </form>
-        <router-link :to="{name:'login'}">Login</router-link>
     </div>
 </template>
 <script>
@@ -43,10 +50,27 @@ export default {
             phone : "3456789012",
             password : "test1234",
             re_enter_password : "test1234",
+            error : {}
         }
-    },methods:{
+    },
+    watch:{
+        password(){
+            this.error.password=""
+        },
+        re_enter_password(){
+            this.error.password=""
+        },
+        email(){
+            this.error.email=""
+        }
+    },
+    methods:{
         async handleSubmit(){
             try{
+                if (this.password != this.re_enter_password){
+                    this.error.password = "Password does not match"
+                    return 
+                }
                 const resp = await fetch("/api/register",{
                     method:'POST',
                     headers:{
@@ -78,7 +102,8 @@ export default {
                         this.$router.push({name:'todos'})
                     }
                 } else{
-                    alert("An error occured")
+                    const data = await resp.json()
+                    this.error = data.message
                 }
             } catch {
                 alert("Sorry this is an erroor")

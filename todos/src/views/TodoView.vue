@@ -7,7 +7,19 @@
     <div class="flex items-center justify-center gap-7">
         <button @click="page_no-=1" class="border-[1px] border-gray-500 p-2 rounded" :disabled="!previous_page">Previous</button>
         <p>Task Per page: </p>
-        <input class="border-[1px] border-green-200 p-2" type="number" v-model="count_no" min="1" max="10"/>
+        <!-- <input class="border-[1px] border-green-200 p-2" type="select" v-model="count_no" min="1" max="10"/> -->
+        <select v-model="count_no">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
         <button @click="page_no+=1" class="border-[1px] border-gray-500 p-2 rounded" :disabled="!next_page">Next</button>
     </div>
     <div class="flex justify-center items-center" id="display_the_total_todos">

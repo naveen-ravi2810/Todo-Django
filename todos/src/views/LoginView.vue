@@ -3,19 +3,22 @@
     <div class="flex h-screen justify-center items-center">
         <div>
             <form @submit.prevent="handleSubmit" class="border-[2px] p-4 rounded-xl">
+                <p class="text-red-400 animate-bounce" v-if="error['message']">{{ error.message }}</p>
                 <div class="">
-                    <label>Email</label> <br>
+                    <label class="uppercase font-semibold">Email</label> <br>
                     <input class="border-[1px] p-2 rounded" type="email" v-model="email" required/>
                 </div>
                 <div class="pt-5">
-                    <label>Password</label> <br>
+                    <label class="uppercase font-semibold">Password</label> <br>
                     <input class="border-[1px] p-2 rounded" type="password" v-model="password" required/>
                 </div>
-                <div class="flex justify-center items-center py-5">
-                    <button class="border-[1px] bg-green-300 hover:bg-green-500 p-2 rounded" type="submit">Login</button>
+                <div class="w-full flex justify-center items-center py-5">
+                    <button class="w-full border-[1px] bg-green-300 hover:bg-green-500 p-2 rounded" type="submit">Login</button>
                 </div>
-                <p>Not have an account?</p>
-                <router-link :to="{ name: 'register' }">Register</router-link>
+                <p class="text-center">Not have an account?</p>
+                <div class="w-full pt-3 flex justify-center text-center">
+                    <router-link class="w-full bg-green-300 hover:bg-green-500 py-2" :to="{ name: 'register' }">Register</router-link>
+                </div>
             </form>
         </div>
     </div>
@@ -31,8 +34,19 @@ export default {
     data() {
         return {
             email: "rnaveen28102003@gmail.com",
-            password: "test1234"
+            password: "test1234",
+            error : {
+                'message': ' '
+            }
         };
+    },
+    watch:{
+        email(){
+            this.error = {}
+        },
+        password(){
+            this.error = {}
+        }
     },
     methods: {
         async handleSubmit() {
@@ -52,7 +66,7 @@ export default {
                     this.$store.commit('logged_in')
                     this.$router.push({ name: 'todos'})
                 } else {
-                    alert(data.message);
+                    this.error.message = data.message
                 }
             } catch (error) {
                 console.error("Error during form submission:", error);
